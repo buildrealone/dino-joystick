@@ -1,0 +1,11 @@
+Model Information:
+* title:	Mall Cop - Animated
+* source:	https://sketchfab.com/3d-models/mall-cop-animated-dcc411c88b2b4ff49f4078e3755d8b40
+* author:	tonyflanagan (https://sketchfab.com/tonyflanagan)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Mall Cop - Animated" (https://sketchfab.com/3d-models/mall-cop-animated-dcc411c88b2b4ff49f4078e3755d8b40) by tonyflanagan (https://sketchfab.com/tonyflanagan) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title>Character Movement Test v3.0</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="js/aframe-v1.3.0-v2.js"></script>
+        <script src="js/joystick.js"></script>
+        <script src="js/aframe-extras-6.1.1.min.js"></script>
+        <script src="js/aframe-environment-component.min.js"></script>
+        <script src="js/aframe-particle-system-component.min.js"></script>
+        <script>
+          AFRAME.registerComponent('screen-controls-character', 
+          {
+            init: function () 
+            {
+                this.camera = document.getElementById("camera").components["extended-wasd-controls"];
+                this.character = document.getElementById("character").components["extended-wasd-controls"];
+                this.joystick = new Joystick("stick", 64, 8);
+              },
+        
+              tick: function(time, deltaTime) {       
+                this.camera.movePercent.x = this.joystick.value.x * 0.1;
+                this.camera.movePercent.z = this.joystick.value.y * 0.1;
+                camera.setAttribute("position", { x: character.object3D.position.x, y: character.object3D.position.y + 1, z: character.object3D.position.z - 2 });
+                camera.setAttribute("rotation", { x: 0, y: 180, z: 0});
+        
+                if (this.joystick.value.x === 0 && this.joystick.value.y === 0){
+                  character.setAttribute('animation-mixer', {
+                    clip: 'idle', // Idle
+                    loop: 'repeat',
+                    crossFadeDuration: 0.4
+                  })
+                }
+                else {
+                  character.setAttribute('animation-mixer', {
+                    clip: 'run', // Walking
+                    loop: 'repeat',
+                    crossFadeDuration: 0.4
+                  },
+                  character.setAttribute('rotation', {
+                    x: 0, y: (Math.atan2(-this.joystick.value.y, this.joystick.value.x) * 180 / Math.PI) - 90, z: 0
+                  }), 
+                  character.object3D.position.x += (Math.abs(this.joystick.value.x) > 0.7) ? (-this.joystick.value.x * 0.1) : 0,
+                  character.object3D.position.z += (Math.abs(this.joystick.value.y) > 0.7) ? (-this.joystick.value.y * 0.1) : 0)
+                } 
+              }
+            }
+            );
+        </script>
+    </head>
+<body>
+   
+   <div id="mainUI" oncontextmenu="return false;">
+    <div id="regionUI">
+      <div id="buttonUI">
+        <img src="assets/images/joystick-base-black.png"/>
+        <div id="stick">
+          <img src="assets/images/joystick-white.png"/>		
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a-scene 
+    screen-controls-character
+    loading-screen="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    vr-mode-ui="enabled: false"
+  >
+  <a-assets>
+    <!-- <a-asset-item id="forest" src="forest/scene.gltf"></a-asset-item> -->
+    <!-- <a-asset-item id="main-character" src="assets/models/mall-cop/scene.gltf"></a-asset-item> -->
+    <a-asset-item id="main-character" src="assets/models/little-trex/scene.gltf"></a-asset-item>
+  </a-assets>
+  <a-entity 
+    id="camera" 
+    camera 
+    look-controls
+    extended-wasd-controls="flyEnabled: true; inputType: joystick;"
+    screen-controls></a-entity>
+  <a-entity light="type: directional; intensity: 2; castShadow: true; shadowMapHeight:2048; shadowMapWidth:2048; target: #character; shadowRadius: 5" position="1 4.3 2.5" shadow></a-entity>
+  <a-entity light="type: ambient; intensity: 2.0;"></a-entity>
+
+  <a-entity
+    id="character"
+    gltf-model="#main-character"
+    gltf-morph="morphtarget: Surprised; value: 0;"
+    animation-mixer="clip: idle; loop: repeat; crossFadeDuration: 0.4;"
+    position="-3 0 10"
+    scale="0.6 0.6 0.6"
+    shadow
+  >
+  </a-entity> 
+
+  <a-sky color="#000000"></a-sky>
+  <!-- <a-entity gltf-model="#forest" scale="2 2 2"></a-entity>  -->
+  <a-entity position="0 0.5 -15" particle-system="preset: dust; particleCount: 7000; color: #deeb34; size:1"></a-entity>
+  </a-scene>
+  
+</body>
+</html>
